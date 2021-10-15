@@ -1,5 +1,5 @@
 package com.example.myapplication
 
 interface MainView {
-    fun setButtonText(index: Int, text: String)
+    fun setButtonText(counter: CountersEnum, text: String)
 }
