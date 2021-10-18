@@ -15,19 +15,17 @@ class MainActivity : AppCompatActivity(), MainView {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
-        val listener = View.OnClickListener {
-            presenter.counterClick(it.id)
-        }
-        mainBinding.btnCounter1.setOnClickListener(listener)
-        mainBinding.btnCounter2.setOnClickListener(listener)
-        mainBinding.btnCounter3.setOnClickListener(listener)
+
+        mainBinding.btnCounter1.setOnClickListener{presenter.counterClick(CountersEnum.COUNTER_1)}
+        mainBinding.btnCounter2.setOnClickListener{presenter.counterClick(CountersEnum.COUNTER_2)}
+        mainBinding.btnCounter3.setOnClickListener{presenter.counterClick(CountersEnum.COUNTER_3)}
     }
 
-    override fun setButtonText(index: Int, text: String) {
-        when(index){
-            0 -> mainBinding.btnCounter1.text = text
-            1 -> mainBinding.btnCounter2.text = text
-            2 -> mainBinding.btnCounter3.text = text
+    override fun setButtonText(counter: CountersEnum, text: String) {
+        when(counter){
+            CountersEnum.COUNTER_1 -> mainBinding.btnCounter1.text = text
+            CountersEnum.COUNTER_2 -> mainBinding.btnCounter2.text = text
+            CountersEnum.COUNTER_3 -> mainBinding.btnCounter3.text = text
         }
     }
 }
