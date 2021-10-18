@@ -1,5 +1,11 @@
 package com.example.myapplication
 
+import moxy.viewstate.strategy.AddToEndSingleStrategy
+import moxy.viewstate.strategy.StateStrategyType
+
+@StateStrategyType(AddToEndSingleStrategy::class)
 interface MainView {
-    fun setButtonText(counter: CountersEnum, text: String)
+    fun setButtonOneText(text: String)
+    fun setButtonTwoText(text: String)
+    fun setButtonThreeText(text: String)
 }
