@@ -1,4 +1,6 @@
-package com.example.myapplication
+package com.example.myapplication.presenter
+
+import com.example.myapplication.IItemView
 
 interface IListPresenter<V : IItemView> {
     var itemClickListener: ((V) -> Unit)?
