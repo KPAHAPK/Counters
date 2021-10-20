@@ -15,16 +15,14 @@ interface UsersListView : MvpView {
 }
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface UserDescriptionView: MvpView{
+interface UserDescriptionView : MvpView {
     fun init()
-    fun updateList()
 }
 
 
-
-//@AddToEndSingle
-//interface ListUserView : MvpView {
-//    fun init()
-//    fun updateList()
-//}
+@AddToEndSingle
+interface ListUserView : MvpView {
+    fun init()
+    fun updateList()
+}
 

@@ -2,12 +2,16 @@ package com.example.myapplication.presenter
 
 import com.example.myapplication.GitHubUser
 import com.example.myapplication.GitHubUsersRepo
-import com.example.myapplication.view.IUserItemView
 import com.example.myapplication.UsersListView
+import com.example.myapplication.screens.AndroidScreens
+import com.example.myapplication.view.IUserItemView
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
 
-class UsersPresenter(private val usersRepo: GitHubUsersRepo, val router: Router) : MvpPresenter<UsersListView>() {
+class UsersPresenter(private val usersRepo: GitHubUsersRepo, val router: Router) :
+    MvpPresenter<UsersListView>() {
+
+    private val screens = AndroidScreens()
 
     class UsersListPresenter : IUserListPresenter {
         val users = mutableListOf<GitHubUser>()
@@ -29,17 +33,17 @@ class UsersPresenter(private val usersRepo: GitHubUsersRepo, val router: Router)
         loadData()
 
         usersListPresenter.itemClickListener = { itemView ->
+            router.navigateTo(screens.userDescription(usersListPresenter.users[itemView.pos]))
         }
     }
 
-    fun loadData() {
-        val users =  usersRepo.getUsers()
+    private fun loadData() {
+        val users = usersRepo.getUsers()
         usersListPresenter.users.addAll(users)
         viewState.updateList()
     }
 
     fun backPressed(): Boolean {
-        router.exit()
         return true
     }
 

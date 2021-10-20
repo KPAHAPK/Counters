@@ -1,5 +1,5 @@
 package com.example.myapplication
 
-interface IItemView{
+interface IItemView {
     var pos: Int
 }

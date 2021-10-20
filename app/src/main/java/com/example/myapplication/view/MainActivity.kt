@@ -1,7 +1,10 @@
 package com.example.myapplication.view
 
 import android.os.Bundle
-import com.example.myapplication.*
+import com.example.myapplication.App
+import com.example.myapplication.BackButtonListener
+import com.example.myapplication.MainView
+import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.presenter.MainPresenter
 import com.example.myapplication.screens.AndroidScreens

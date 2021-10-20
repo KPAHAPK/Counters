@@ -3,8 +3,8 @@ package com.example.myapplication.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.presenter.IUserListPresenter
 import com.example.myapplication.databinding.UserBinding
+import com.example.myapplication.presenter.IUserListPresenter
 
 class UsersRVAdapter(private val presenter: IUserListPresenter) :
     RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {

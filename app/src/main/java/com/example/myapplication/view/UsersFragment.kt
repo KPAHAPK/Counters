@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.*
-import com.example.myapplication.presenter.UsersPresenter
+import com.example.myapplication.App
+import com.example.myapplication.BackButtonListener
+import com.example.myapplication.GitHubUsersRepo
+import com.example.myapplication.UsersListView
 import com.example.myapplication.databinding.FragmentUsersBinding
+import com.example.myapplication.presenter.UsersPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-class UsersFragment: MvpAppCompatFragment(), UsersListView, BackButtonListener {
+class UsersFragment : MvpAppCompatFragment(), UsersListView, BackButtonListener {
 
     companion object {
         fun newInstance() = UsersFragment()
@@ -25,7 +28,7 @@ class UsersFragment: MvpAppCompatFragment(), UsersListView, BackButtonListener {
 
     private var _vb: FragmentUsersBinding? = null
     private val binding: FragmentUsersBinding
-    get() = _vb!!
+        get() = _vb!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,13 +45,13 @@ class UsersFragment: MvpAppCompatFragment(), UsersListView, BackButtonListener {
     }
 
     override fun init() {
-        binding.rvUsers?.layoutManager = LinearLayoutManager(context)
+        binding.rvUsers.layoutManager = LinearLayoutManager(context)
         adapter = UsersRVAdapter(presenter.usersListPresenter)
-        binding.rvUsers?.adapter = adapter
+        binding.rvUsers.adapter = adapter
     }
 
     override fun updateList() {
-       adapter?.notifyDataSetChanged()
+        adapter?.notifyDataSetChanged()
     }
 
     override fun onBackPressed() = presenter.backPressed()

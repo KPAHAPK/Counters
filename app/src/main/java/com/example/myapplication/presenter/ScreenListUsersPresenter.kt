@@ -2,8 +2,8 @@ package com.example.myapplication.presenter
 
 import com.example.myapplication.GitHubUser
 import com.example.myapplication.GitHubUsersRepo
-import com.example.myapplication.view.IUserItemView
 import com.example.myapplication.ListUserView
+import com.example.myapplication.view.IUserItemView
 import moxy.MvpPresenter
 
 class ScreenListUsersPresenter(val usersRepo: GitHubUsersRepo) : MvpPresenter<ListUserView>() {
@@ -27,7 +27,7 @@ class ScreenListUsersPresenter(val usersRepo: GitHubUsersRepo) : MvpPresenter<Li
         super.onFirstViewAttach()
         viewState.init()
         loadData()
-        userListPresenter.itemClickListener = {itemView ->
+        userListPresenter.itemClickListener = { itemView ->
 
         }
     }

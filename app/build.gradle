@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+
     compileSdk 31
 
     defaultConfig {
@@ -32,8 +33,11 @@ android {
         jvmTarget = '1.8'
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding true
+    }
+    kapt {
+        correctErrorTypes = true
     }
 }
 
@@ -44,6 +48,7 @@ dependencies {
     kapt "com.github.moxy-community:moxy-compiler:2.1.2"
     implementation "com.github.moxy-community:moxy-ktx:2.1.2"
     implementation "com.github.moxy-community:moxy-androidx:2.1.2"
+
 
     //recycler
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
