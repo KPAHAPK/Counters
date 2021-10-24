@@ -50,7 +50,9 @@ class UserDescriptionFragment : MvpAppCompatFragment(), UserDescriptionView, Bac
 
     override fun init() {
         val user = arguments?.getParcelable<GitHubUser>(ARG_1)
-        binding.textView.text = user?.login
+        val userLogin = user?.login
+        val userId = user?.id
+        binding.textView.text = userLogin + userId
     }
 
 
