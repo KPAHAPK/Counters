@@ -11,12 +11,15 @@ import com.example.myapplication.GitHubUsersRepo
 import com.example.myapplication.UsersListView
 import com.example.myapplication.databinding.FragmentUsersBinding
 import com.example.myapplication.presenter.UsersPresenter
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 class UsersFragment : MvpAppCompatFragment(), UsersListView, BackButtonListener {
 
-    companion object {
+    private final val disposable = CompositeDisposable()
+
+       companion object {
         fun newInstance() = UsersFragment()
     }
 
@@ -26,22 +29,38 @@ class UsersFragment : MvpAppCompatFragment(), UsersListView, BackButtonListener 
 
     var adapter: UsersRVAdapter? = null
 
-    private var _vb: FragmentUsersBinding? = null
+    private var _binding: FragmentUsersBinding? = null
     private val binding: FragmentUsersBinding
-        get() = _vb!!
+        get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _vb = FragmentUsersBinding.inflate(inflater, container, false)
+        _binding = FragmentUsersBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.loadDataBtn.setOnClickListener{
+            presenter.loadDataRX()
+        }
+
+        binding.btn.setOnClickListener{
+            presenter.loadDataRXFilter()
+        }
+
+        binding.clearBtn.setOnClickListener{
+            presenter.clearList()
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _vb = null
+        _binding = null
     }
 
     override fun init() {
@@ -49,6 +68,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersListView, BackButtonListener 
         adapter = UsersRVAdapter(presenter.usersListPresenter)
         binding.rvUsers.adapter = adapter
     }
+
 
     override fun updateList() {
         adapter?.notifyDataSetChanged()

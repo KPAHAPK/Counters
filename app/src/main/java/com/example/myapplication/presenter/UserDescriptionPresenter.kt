@@ -6,7 +6,7 @@ import com.example.myapplication.screens.AndroidScreens
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
 
-class UserDescriptionPresenter(val router: Router) :
+class UserDescriptionPresenter(router: Router) :
     MvpPresenter<UserDescriptionView>() {
 
     override fun onFirstViewAttach() {
