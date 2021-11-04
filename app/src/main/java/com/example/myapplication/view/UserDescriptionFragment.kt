@@ -4,21 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.App
 import com.example.myapplication.UserDescriptionView
+import com.example.myapplication.api.RetrofitHolder
 import com.example.myapplication.databinding.FragmentUserDecriptionBinding
 import com.example.myapplication.model.GitHubUser
+import com.example.myapplication.model.RetrofitUserRepositories
 import com.example.myapplication.presenter.UserDescriptionPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 private const val ARG_1 = "user"
 
-class UserDescriptionFragment(val imageLoader: GlideImageLoader) : MvpAppCompatFragment(), UserDescriptionView, BackButtonListener {
+class UserDescriptionFragment(val imageLoader: GlideImageLoader) : MvpAppCompatFragment(),
+    UserDescriptionView, BackButtonListener {
 
     private var _binding: FragmentUserDecriptionBinding? = null
     private val binding: FragmentUserDecriptionBinding
         get() = _binding!!
+
+    private var adapter: UserRepositoriesRVAdapter? = null
 
     companion object {
         fun newInstance(user: GitHubUser): UserDescriptionFragment {
@@ -31,8 +37,13 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader) : MvpAppCompatF
         }
     }
 
-
-    val presenter by moxyPresenter { UserDescriptionPresenter(App.instance.router) }
+    val presenter by moxyPresenter {
+        UserDescriptionPresenter(
+            RetrofitUserRepositories(
+                RetrofitHolder.iDataSource
+            ), App.instance.router
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,20 +54,25 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader) : MvpAppCompatF
         return binding.root
     }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 
     override fun init() {
         val user = arguments?.getParcelable<GitHubUser>(ARG_1)
+
+        val linearLayoutManager = LinearLayoutManager(context)
+        binding.rvRepositories.layoutManager = linearLayoutManager
+        adapter = UserRepositoriesRVAdapter(presenter.userRepositoriesPresenter)
+        binding.rvRepositories.adapter = adapter
+
         binding.userLogin.text = user?.login
         imageLoader.loadInto(user?.avatarUrl, binding.userAvatar)
+    }
+
+    override fun updateList() {
+        adapter?.notifyDataSetChanged()
     }
 
 

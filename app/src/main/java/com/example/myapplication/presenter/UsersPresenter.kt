@@ -16,8 +16,6 @@ const val TAG = "UsersPresenter"
 class UsersPresenter(private val retrofitUsersRepo: IGitHibUsersRepo, val router: Router) :
     MvpPresenter<UsersListView>() {
 
-    val disposable = CompositeDisposable()
-
     private val screens = AndroidScreens()
 
     class UsersListPresenter : IUserListPresenter {
@@ -41,7 +39,6 @@ class UsersPresenter(private val retrofitUsersRepo: IGitHibUsersRepo, val router
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        val viewState = viewState
         viewState.init()
         loadDataFromServer()
 

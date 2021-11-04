@@ -7,7 +7,7 @@
     android:padding="24dp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fork_rv"
+        android:id="@+id/rv_forks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"

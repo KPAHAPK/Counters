@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class UserRepositories(
-    @Expose val name: String
+data class UserRepository(
+    @Expose val name: String?
 ) : Parcelable {
 }
