@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.myapplication.App
-import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.UserDescriptionView
 import com.example.myapplication.databinding.FragmentUserDecriptionBinding
+import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.presenter.UserDescriptionPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -17,7 +17,7 @@ private const val ARG_1 = "user"
 class UserDescriptionFragment : MvpAppCompatFragment(), UserDescriptionView, BackButtonListener {
 
     private var _binding: FragmentUserDecriptionBinding? = null
-    private val binding : FragmentUserDecriptionBinding
+    private val binding: FragmentUserDecriptionBinding
         get() = _binding!!
 
     companion object {

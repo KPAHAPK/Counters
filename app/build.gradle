@@ -43,6 +43,11 @@ android {
 
 dependencies {
 
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0'
+
     //Moxy
     implementation "com.github.moxy-community:moxy:2.1.2"
     kapt "com.github.moxy-community:moxy-compiler:2.1.2"

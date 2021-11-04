@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.App
-import com.example.myapplication.model.GitHubUsersRepo
 import com.example.myapplication.UsersListView
 import com.example.myapplication.databinding.FragmentUsersBinding
+import com.example.myapplication.model.GitHubUsersRepo
 import com.example.myapplication.presenter.UsersPresenter
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpAppCompatFragment
@@ -18,7 +18,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersListView, BackButtonListener 
 
     private final val disposable = CompositeDisposable()
 
-       companion object {
+    companion object {
         fun newInstance() = UsersFragment()
     }
 
@@ -44,15 +44,15 @@ class UsersFragment : MvpAppCompatFragment(), UsersListView, BackButtonListener 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.loadDataBtn.setOnClickListener{
+        binding.loadDataBtn.setOnClickListener {
             presenter.loadDataRX()
         }
 
-        binding.btn.setOnClickListener{
+        binding.btn.setOnClickListener {
             presenter.loadDataRXFilter()
         }
 
-        binding.clearBtn.setOnClickListener{
+        binding.clearBtn.setOnClickListener {
             presenter.clearList()
         }
     }
