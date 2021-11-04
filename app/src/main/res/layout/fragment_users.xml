@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <Button
-        android:id="@+id/load_data_btn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Загрузить 10 пользователей"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="200dp"
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Загрузить каждого 10 пользователя"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/load_data_btn" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:weightSum="2"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/clear_btn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Очистить"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn" />
+        <Button
+            android:id="@+id/load_data_btn"
+            android:layout_width="150dp"
+            android:layout_marginEnd="24dp"
+            android:layout_height="wrap_content"
+            android:text="@string/load_users"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/clear_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clear_list_of_users"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_users"
@@ -36,8 +41,8 @@
         android:clipToPadding="false"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

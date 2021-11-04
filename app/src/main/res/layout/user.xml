@@ -4,15 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?attr/selectableItemBackground"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    android:layout_gravity="center|top"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/user_avatar"
+        android:layout_marginTop="24dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
 
     <TextView
-        android:id="@+id/tv_login"
-        android:layout_width="0dp"
+        android:id="@+id/user_login"
+        android:layout_marginTop="24dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_weight="1"
+        tools:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/user_branch"
+        android:layout_marginTop="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         tools:text="@string/app_name" />
 
 </LinearLayout>
