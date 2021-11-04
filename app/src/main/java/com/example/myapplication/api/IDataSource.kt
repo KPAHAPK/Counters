@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface IDataSource{
     @GET("users")
-    fun getGitHubUsers(): Single<GitHubUser>
+    fun getGitHubUsers(): Single<List<GitHubUser>>
 }
