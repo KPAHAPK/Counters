@@ -41,7 +41,6 @@ class UsersPresenter(private val retrofitUsersRepo: IGitHibUsersRepo, val router
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        val viewState = viewState
         viewState.init()
         loadDataFromServer()
 

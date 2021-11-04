@@ -1,24 +1,33 @@
 package com.example.myapplication.view
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.databinding.FragmentUserDecriptionBinding
+import com.example.myapplication.databinding.UserReposityItemBinding
+import com.example.myapplication.presenter.IUserRepositoriesPresenter
 
-class UserRepositoriesRVAdapter: RecyclerView.Adapter<UserRepositoriesRVAdapter.ViewHolder>() {
-
-    inner class ViewHolder(val binding: FragmentUserDecriptionBinding): RecyclerView.ViewHolder(binding.root){
-
-    }
+class UserRepositoriesRVAdapter(val presenter: IUserRepositoriesPresenter) :
+    RecyclerView.Adapter<UserRepositoriesRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
+        val view =
+            UserReposityItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        presenter.bindView(holder.apply { pos = position })
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+    override fun getItemCount() = presenter.getCount()
+
+    inner class ViewHolder(private val binding: UserReposityItemBinding) :
+        RecyclerView.ViewHolder(binding.root), IRepoItemView {
+        override fun setRepoName(repoName: String) {
+            binding.repositoriesName.text = repoName
+        }
+
+        override var pos = -1
+
     }
 }

@@ -6,10 +6,10 @@ import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface IDataSource{
+interface IDataSource {
     @GET("users")
     fun getGitHubUsers(): Single<List<GitHubUser>>
 
     @GET("users/{username}/repos")
-    fun getUserRepositories(@Path("username") username: String): Single<List<UserRepositories>>
+    fun getUserRepositories(@Path("username") username: String?): Single<List<UserRepositories>>
 }
