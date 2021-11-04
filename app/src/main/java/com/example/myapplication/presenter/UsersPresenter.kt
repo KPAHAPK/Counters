@@ -29,7 +29,9 @@ class UsersPresenter(private val retrofitUsersRepo: IGitHibUsersRepo, val router
         override fun bindView(view: IUserItemView) {
             val user = users[view.pos]
             user.login?.let {
-                view.setUserIdentifiers(user.id, user.login)
+                view.setLogin(user.login)
+                view.setId(user.id)
+                view.loadAvatar(user.avatarUrl)
             }
 
         }
@@ -41,6 +43,7 @@ class UsersPresenter(private val retrofitUsersRepo: IGitHibUsersRepo, val router
         super.onFirstViewAttach()
         val viewState = viewState
         viewState.init()
+        loadDataFromServer()
 
         usersListPresenter.itemClickListener = { itemView ->
             router.navigateTo(screens.userDescription(usersListPresenter.users[itemView.pos]))

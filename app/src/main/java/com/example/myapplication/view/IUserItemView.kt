@@ -3,5 +3,7 @@ package com.example.myapplication.view
 import com.example.myapplication.IItemView
 
 interface IUserItemView : IItemView {
-    fun setUserIdentifiers( id: Int?, login: String)
+    fun setLogin(login: String?)
+    fun setId(id: Int?)
+    fun loadAvatar(avatar: String?)
 }
