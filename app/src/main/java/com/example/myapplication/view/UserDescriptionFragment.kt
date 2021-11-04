@@ -20,6 +20,7 @@ class UserDescriptionFragment : MvpAppCompatFragment(), UserDescriptionView, Bac
     private val binding: FragmentUserDecriptionBinding
         get() = _binding!!
 
+
     companion object {
         fun newInstance(user: GitHubUser): UserDescriptionFragment {
             val args = Bundle()
@@ -30,8 +31,8 @@ class UserDescriptionFragment : MvpAppCompatFragment(), UserDescriptionView, Bac
         }
     }
 
-
-    val presenter by moxyPresenter { UserDescriptionPresenter(App.instance.router) }
+    private val user = arguments?.getParcelable<GitHubUser>(ARG_1)
+    val presenter by moxyPresenter { UserDescriptionPresenter(App.instance.router,user) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,10 +49,9 @@ class UserDescriptionFragment : MvpAppCompatFragment(), UserDescriptionView, Bac
     }
 
     override fun init() {
-        val user = arguments?.getParcelable<GitHubUser>(ARG_1)
         val userLogin = user?.login
         val userId = user?.id
-        binding.textView.text = userLogin + userId
+        binding.textView.text = "$userLogin - $userId"
     }
 
 

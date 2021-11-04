@@ -26,8 +26,10 @@ class UsersRVAdapter(private val presenter: IUserListPresenter) :
     inner class ViewHolder(private val binding: UserBinding) :
         RecyclerView.ViewHolder(binding.root),
         IUserItemView {
-        override fun setUserIdentifiers(text: String, id: Int) = with(binding) {
-            tvLogin.text = text + id
+
+        override fun setUserIdentifiers(id: Int?, login: String){
+            binding.userLogin.text = login
+            binding.userId.text = id.toString()
         }
 
         override var pos = -1

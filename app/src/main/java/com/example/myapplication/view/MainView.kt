@@ -19,10 +19,3 @@ interface UserDescriptionView : MvpView {
     fun init()
 }
 
-
-@AddToEndSingle
-interface ListUserView : MvpView {
-    fun init()
-    fun updateList()
-}
-
