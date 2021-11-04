@@ -40,6 +40,10 @@ class UserDescriptionPresenter(val retrofitUserRepositories: IUserRepositories, 
         super.onFirstViewAttach()
         viewState.init()
         loadDataFromServer()
+
+        userRepositoriesPresenter.itemClickListener = {itemView ->
+            router.navigateTo(screens.repositoryInfo(userRepositoriesPresenter.userRepos[itemView.pos]))
+        }
     }
 
     fun loadDataFromServer(){

@@ -6,4 +6,5 @@
     <string name="load_users">Загрузить пользователей</string>
     <string name="clear_list_of_users">Очистить</string>
     <string name="user_repositories">Репозитории:</string>
+    <string name="fork">Fork: %s</string>
 </resources>

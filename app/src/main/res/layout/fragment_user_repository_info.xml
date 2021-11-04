@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     android:padding="24dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_forks"
+    <TextView
+        android:id="@+id/fork_titile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repository_name" />
+        app:layout_constraintTop_toBottomOf="@id/repository_name"
+        android:text="@string/fork"/>
 
     <TextView
         android:id="@+id/repository_name"

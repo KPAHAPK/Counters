@@ -20,3 +20,8 @@ interface UserDescriptionView : MvpView {
     fun updateList()
 }
 
+@StateStrategyType(AddToEndSingleStrategy::class)
+interface UserRepositoryInfoView: MvpView{
+    fun init()
+}
+
