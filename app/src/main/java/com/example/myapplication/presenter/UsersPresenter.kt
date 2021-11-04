@@ -1,7 +1,7 @@
 package com.example.myapplication.presenter
 
-import com.example.myapplication.GitHubUser
-import com.example.myapplication.GitHubUsersRepo
+import com.example.myapplication.model.GitHubUser
+import com.example.myapplication.model.GitHubUsersRepo
 import com.example.myapplication.UsersListView
 import com.example.myapplication.screens.AndroidScreens
 import com.example.myapplication.view.IUserItemView

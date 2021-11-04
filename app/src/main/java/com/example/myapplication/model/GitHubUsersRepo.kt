@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.model
 
 class GitHubUsersRepo {
     private val repositories = (0..1000).map { GitHubUser(it, "GitHubUser") }

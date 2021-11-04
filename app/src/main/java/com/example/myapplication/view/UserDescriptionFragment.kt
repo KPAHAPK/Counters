@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.myapplication.App
-import com.example.myapplication.BackButtonListener
-import com.example.myapplication.GitHubUser
+import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.UserDescriptionView
 import com.example.myapplication.databinding.FragmentUserDecriptionBinding
 import com.example.myapplication.presenter.UserDescriptionPresenter

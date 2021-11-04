@@ -1,6 +1,6 @@
 package com.example.myapplication.screens
 
-import com.example.myapplication.GitHubUser
+import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.view.UserDescriptionFragment
 import com.example.myapplication.view.UsersFragment
 import com.github.terrakok.cicerone.Screen

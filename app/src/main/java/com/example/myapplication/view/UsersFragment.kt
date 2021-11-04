@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.App
-import com.example.myapplication.BackButtonListener
-import com.example.myapplication.GitHubUsersRepo
+import com.example.myapplication.model.GitHubUsersRepo
 import com.example.myapplication.UsersListView
 import com.example.myapplication.databinding.FragmentUsersBinding
 import com.example.myapplication.presenter.UsersPresenter
