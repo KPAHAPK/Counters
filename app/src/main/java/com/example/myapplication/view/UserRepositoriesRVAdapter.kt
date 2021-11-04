@@ -19,8 +19,7 @@ class UserRepositoriesRVAdapter(val presenter: IUserRepositoriesPresenter) :
 
 
     override fun getItemCount() : Int{
-        val count = presenter.getCount()
-        return count
+        return presenter.getCount()
     }
 
     inner class ViewHolder(val binding: UserReposityItemBinding) :

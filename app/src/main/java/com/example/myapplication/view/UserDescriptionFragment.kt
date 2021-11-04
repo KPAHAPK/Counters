@@ -17,7 +17,8 @@ import moxy.ktx.moxyPresenter
 
 private const val ARG_1 = "user"
 
-class UserDescriptionFragment(val imageLoader: GlideImageLoader) : MvpAppCompatFragment(),
+class UserDescriptionFragment(val imageLoader: GlideImageLoader, val user: GitHubUser) :
+    MvpAppCompatFragment(),
     UserDescriptionView, BackButtonListener {
 
     private var _binding: FragmentUserDecriptionBinding? = null
@@ -27,21 +28,14 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader) : MvpAppCompatF
     private var adapter: UserRepositoriesRVAdapter? = null
 
     companion object {
-        fun newInstance(user: GitHubUser): UserDescriptionFragment {
-            val args = Bundle()
-            args.putParcelable(ARG_1, user)
-            return UserDescriptionFragment(GlideImageLoader()).apply {
-                this.arguments = args
-            }
-
-        }
+        fun newInstance(user: GitHubUser) = UserDescriptionFragment(GlideImageLoader(), user)
     }
 
     val presenter by moxyPresenter {
         UserDescriptionPresenter(
             RetrofitUserRepositories(
                 RetrofitHolder.iDataSource
-            ), App.instance.router
+            ), user, App.instance.router
         )
     }
 
@@ -60,15 +54,14 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader) : MvpAppCompatF
     }
 
     override fun init() {
-        val user = arguments?.getParcelable<GitHubUser>(ARG_1)
 
         val linearLayoutManager = LinearLayoutManager(context)
         binding.rvRepositories.layoutManager = linearLayoutManager
         adapter = UserRepositoriesRVAdapter(presenter.userRepositoriesPresenter)
         binding.rvRepositories.adapter = adapter
 
-        binding.userLogin.text = user?.login
-        imageLoader.loadInto(user?.avatarUrl, binding.userAvatar)
+        binding.userLogin.text = user.login
+        imageLoader.loadInto(user.avatarUrl, binding.userAvatar)
     }
 
     override fun updateList() {

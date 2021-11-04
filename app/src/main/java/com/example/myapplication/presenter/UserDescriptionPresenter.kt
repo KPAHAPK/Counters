@@ -13,7 +13,7 @@ import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 
-class UserDescriptionPresenter(val retrofitUserRepositories: IUserRepositories, val router: Router) :
+class UserDescriptionPresenter(val retrofitUserRepositories: IUserRepositories, val user: GitHubUser,  val router: Router) :
     MvpPresenter<UserDescriptionView>() {
 
     private val screens = AndroidScreens()
@@ -43,15 +43,17 @@ class UserDescriptionPresenter(val retrofitUserRepositories: IUserRepositories, 
     }
 
     fun loadDataFromServer(){
-        retrofitUserRepositories.getUserRepos("mojombo")
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ repos ->
-                userRepositoriesPresenter.userRepos.clear()
-                userRepositoriesPresenter.userRepos.addAll(repos)
-                viewState.updateList()
-            }, {
-            Log.e(TAG, "Error: ${it.message}")
-        })
+        user.login?.let {
+            retrofitUserRepositories.getUserRepos(it)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ repos ->
+                    userRepositoriesPresenter.userRepos.clear()
+                    userRepositoriesPresenter.userRepos.addAll(repos)
+                    viewState.updateList()
+                }, {
+                Log.e(TAG, "Error: ${it.message}")
+            })
+        }
     }
 
     fun backPressed(): Boolean {
