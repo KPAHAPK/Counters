@@ -15,7 +15,6 @@ import com.example.myapplication.presenter.UserDescriptionPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-private const val ARG_1 = "user"
 
 class UserDescriptionFragment(val imageLoader: GlideImageLoader, val user: GitHubUser) :
     MvpAppCompatFragment(),

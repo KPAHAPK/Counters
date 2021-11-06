@@ -1,19 +1,19 @@
 package com.example.myapplication.presenter
 
 import android.util.Log
+import com.example.myapplication.App
 import com.example.myapplication.UsersListView
 import com.example.myapplication.model.GitHubUser
-import com.example.myapplication.model.IGitHibUsersRepo
+import com.example.myapplication.model.IGitHubUsersRepo
 import com.example.myapplication.screens.AndroidScreens
 import com.example.myapplication.view.IUserItemView
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
 
 const val TAG = "UsersPresenter"
 
-class UsersPresenter(private val retrofitUsersRepo: IGitHibUsersRepo, val router: Router) :
+class UsersPresenter(private val retrofitUsersRepo: IGitHubUsersRepo, val router: Router) :
     MvpPresenter<UsersListView>() {
 
     private val screens = AndroidScreens()
