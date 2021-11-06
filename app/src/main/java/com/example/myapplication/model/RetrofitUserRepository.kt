@@ -2,17 +2,18 @@ package com.example.myapplication.model
 
 import com.example.myapplication.INetworkStatus
 import com.example.myapplication.api.IDataSource
+import com.example.myapplication.cache.IUserRepositoryCache
 import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.database.RoomUserRepository
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class RetrofitUserRepositories(
+class RetrofitUserRepository(
     private val api: IDataSource,
     private val networkStatus: INetworkStatus,
-    private val db: AppDatabase
+    private val cache: IUserRepositoryCache
 ) :
-    IUserRepositories {
+    IUserRepository {
     override fun getUserRepos(user: GitHubUser): Single<List<UserRepository>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
@@ -26,19 +27,13 @@ class RetrofitUserRepositories(
                                 user.id ?: ""
                             )
                         }
-                        db.roomUserRepositoryDao().insertAll(roomUserRepositories)
+                        cache.saveCache(roomUserRepositories)
                         userRepositories
                     }
                 }
             } else {
                 Single.fromCallable {
-                    db.roomUserRepositoryDao().getAll().map { roomUserRepository ->
-                        UserRepository(
-                            roomUserRepository.id,
-                            roomUserRepository.repoName,
-                            roomUserRepository.forksCount
-                        )
-                    }
+                    cache.getCache()
                 }
             }
         }.subscribeOn(Schedulers.io())

@@ -9,10 +9,11 @@ import com.example.myapplication.App
 import com.example.myapplication.AppNetworkStatus
 import com.example.myapplication.UserDescriptionView
 import com.example.myapplication.api.RetrofitHolder
+import com.example.myapplication.cache.RoomUserRepositoryCache
 import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.databinding.FragmentUserDecriptionBinding
 import com.example.myapplication.model.GitHubUser
-import com.example.myapplication.model.RetrofitUserRepositories
+import com.example.myapplication.model.RetrofitUserRepository
 import com.example.myapplication.presenter.UserDescriptionPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -33,9 +34,9 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader, val userId: Git
 
     val presenter by moxyPresenter {
         UserDescriptionPresenter(
-            RetrofitUserRepositories(
+            RetrofitUserRepository(
                 RetrofitHolder.iDataSource, AppNetworkStatus(context) ,
-                AppDatabase.getInstance()
+                RoomUserRepositoryCache(AppDatabase.getInstance())
             ), userId, App.instance.router
         )
     }

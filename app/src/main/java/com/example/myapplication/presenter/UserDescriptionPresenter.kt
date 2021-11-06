@@ -3,7 +3,7 @@ package com.example.myapplication.presenter
 import android.util.Log
 import com.example.myapplication.UserDescriptionView
 import com.example.myapplication.model.GitHubUser
-import com.example.myapplication.model.IUserRepositories
+import com.example.myapplication.model.IUserRepository
 import com.example.myapplication.model.UserRepository
 import com.example.myapplication.screens.AndroidScreens
 import com.example.myapplication.view.IRepoItemView
@@ -12,7 +12,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 
 class UserDescriptionPresenter(
-    private val retrofitUserRepositories: IUserRepositories,
+    private val retrofitUserRepository: IUserRepository,
     private val user: GitHubUser,
     private val router: Router
 ) :
@@ -49,7 +49,7 @@ class UserDescriptionPresenter(
     }
 
     fun loadDataFromServer() {
-        retrofitUserRepositories.getUserRepos(user)
+        retrofitUserRepository.getUserRepos(user)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ repos ->
                 userRepositoriesPresenter.userRepos.clear()

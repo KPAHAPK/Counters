@@ -9,6 +9,7 @@ import com.example.myapplication.App
 import com.example.myapplication.AppNetworkStatus
 import com.example.myapplication.UsersListView
 import com.example.myapplication.api.RetrofitHolder
+import com.example.myapplication.cache.RoomGithubUserCache
 import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.databinding.FragmentUsersBinding
 import com.example.myapplication.model.RetrofitGitHubUserRepo
@@ -24,7 +25,8 @@ class UsersFragment : MvpAppCompatFragment(), UsersListView, BackButtonListener 
 
     val presenter: UsersPresenter by moxyPresenter {
         UsersPresenter(RetrofitGitHubUserRepo(RetrofitHolder.iDataSource, AppNetworkStatus(context),
-            AppDatabase.getInstance()), App.instance.router)
+            RoomGithubUserCache(AppDatabase.getInstance())
+        ), App.instance.router)
     }
 
     var adapter: UsersRVAdapter? = null
