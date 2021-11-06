@@ -8,9 +8,6 @@ import com.github.terrakok.cicerone.Router
 
 class App : Application() {
 
-    lateinit var db: AppDatabase
-    private set
-
     companion object {
         lateinit var instance: App
     }
@@ -26,8 +23,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "popular-libs.db")
-            .build()
     }
 
 }

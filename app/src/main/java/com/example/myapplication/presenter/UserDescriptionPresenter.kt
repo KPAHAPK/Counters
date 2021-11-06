@@ -1,11 +1,9 @@
 package com.example.myapplication.presenter
 
 import android.util.Log
-import com.example.myapplication.IItemView
 import com.example.myapplication.UserDescriptionView
 import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.model.IUserRepositories
-import com.example.myapplication.model.RetrofitUserRepositories
 import com.example.myapplication.model.UserRepository
 import com.example.myapplication.screens.AndroidScreens
 import com.example.myapplication.view.IRepoItemView
@@ -24,8 +22,8 @@ class UserDescriptionPresenter(val retrofitUserRepositories: IUserRepositories, 
 
         override fun bindView(view: IRepoItemView) {
             val repo = userRepos[view.pos]
-            repo.name?.let {
-                view.setRepoName(repo.name)
+            repo.repoName?.let {
+                view.setRepoName(repo.repoName)
             }
 
         }
