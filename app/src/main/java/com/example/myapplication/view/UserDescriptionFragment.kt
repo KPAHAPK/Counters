@@ -15,7 +15,7 @@ import com.example.myapplication.presenter.UserDescriptionPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-class UserDescriptionFragment(val imageLoader: GlideImageLoader, val user: GitHubUser) :
+class UserDescriptionFragment(val imageLoader: GlideImageLoader, val userId: GitHubUser) :
     MvpAppCompatFragment(),
     UserDescriptionView, BackButtonListener {
 
@@ -26,14 +26,14 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader, val user: GitHu
     private var adapter: UserRepositoriesRVAdapter? = null
 
     companion object {
-        fun newInstance(user: GitHubUser) = UserDescriptionFragment(GlideImageLoader(), user)
+        fun newInstance(userId: GitHubUser) = UserDescriptionFragment(GlideImageLoader(), userId)
     }
 
     val presenter by moxyPresenter {
         UserDescriptionPresenter(
             RetrofitUserRepositories(
                 RetrofitHolder.iDataSource
-            ), user, App.instance.router
+            ), userId, App.instance.router
         )
     }
 
@@ -58,8 +58,8 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader, val user: GitHu
         adapter = UserRepositoriesRVAdapter(presenter.userRepositoriesPresenter)
         binding.rvRepositories.adapter = adapter
 
-        binding.userLogin.text = user.login
-        imageLoader.loadInto(user.avatarUrl, binding.userAvatar)
+        binding.userLogin.text = userId.login
+        imageLoader.loadInto(userId.avatarUrl, binding.userAvatar)
     }
 
     override fun updateList() {

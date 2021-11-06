@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "room_github_user")
 data class RoomGitHubUser(
-    @PrimaryKey val uId: Int,
+    @PrimaryKey val uId: String,
     @ColumnInfo(name = "login") val login: String?,
     @ColumnInfo(name = "avatar_url") val avatarUrl: String?
 )

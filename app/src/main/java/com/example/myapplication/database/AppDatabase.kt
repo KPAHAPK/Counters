@@ -11,7 +11,7 @@ import androidx.room.RoomDatabase
 
 abstract class AppDatabase : RoomDatabase() {
     abstract fun roomGitHubUserDao(): RoomGitHubUserDao
-    abstract fun roomUserRepositoryDao(): RoomUserRepository
+    abstract fun roomUserRepositoryDao(): RoomUserRepositoryDao
 
     companion object {
         private const val DB_NAME = "github_library.db"

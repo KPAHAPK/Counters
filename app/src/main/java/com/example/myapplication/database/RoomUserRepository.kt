@@ -15,9 +15,9 @@ import androidx.room.PrimaryKey
     )]
 )
 class RoomUserRepository(
-    @PrimaryKey val id: Int,
+    @PrimaryKey val id: String,
     @ColumnInfo(name = "repo_name") val repoName: String,
     @ColumnInfo(name = "forks_count") val forksCount: String,
-    @ColumnInfo(name = "owner_id") val ownerId: Int
+    @ColumnInfo(name = "owner_id") val ownerId: String
 ) {
 }

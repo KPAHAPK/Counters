@@ -13,8 +13,8 @@ class AndroidScreens : IScreens {
         return FragmentScreen { UsersFragment.newInstance() }
     }
 
-    override fun userDescription(user: GitHubUser): Screen {
-        return FragmentScreen { UserDescriptionFragment.newInstance(user) }
+    override fun userDescription(userId: GitHubUser): Screen {
+        return FragmentScreen { UserDescriptionFragment.newInstance(userId) }
     }
 
     override fun repositoryInfo(repo: UserRepository): Screen {

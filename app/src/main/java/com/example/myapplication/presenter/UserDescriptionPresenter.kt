@@ -13,7 +13,7 @@ import moxy.MvpPresenter
 
 class UserDescriptionPresenter(
     val retrofitUserRepositories: IUserRepositories,
-    val user: GitHubUser,
+    val userId: GitHubUser,
     val router: Router
 ) :
     MvpPresenter<UserDescriptionView>() {
@@ -49,7 +49,7 @@ class UserDescriptionPresenter(
     }
 
     fun loadDataFromServer() {
-        user.login?.let {
+        userId.login?.let {
             retrofitUserRepositories.getUserRepos(it)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ repos ->
