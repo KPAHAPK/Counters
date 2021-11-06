@@ -11,12 +11,16 @@ import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 
-class UserDescriptionPresenter(val retrofitUserRepositories: IUserRepositories, val user: GitHubUser,  val router: Router) :
+class UserDescriptionPresenter(
+    val retrofitUserRepositories: IUserRepositories,
+    val user: GitHubUser,
+    val router: Router
+) :
     MvpPresenter<UserDescriptionView>() {
 
     private val screens = AndroidScreens()
 
-    class UserRepositoriesPresenter: IUserRepositoriesPresenter{
+    class UserRepositoriesPresenter : IUserRepositoriesPresenter {
         val userRepos = mutableListOf<UserRepository>()
         override var itemClickListener: ((IRepoItemView) -> Unit)? = null
 
@@ -39,12 +43,12 @@ class UserDescriptionPresenter(val retrofitUserRepositories: IUserRepositories, 
         viewState.init()
         loadDataFromServer()
 
-        userRepositoriesPresenter.itemClickListener = {itemView ->
+        userRepositoriesPresenter.itemClickListener = { itemView ->
             router.navigateTo(screens.repositoryInfo(userRepositoriesPresenter.userRepos[itemView.pos]))
         }
     }
 
-    fun loadDataFromServer(){
+    fun loadDataFromServer() {
         user.login?.let {
             retrofitUserRepositories.getUserRepos(it)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -53,14 +57,13 @@ class UserDescriptionPresenter(val retrofitUserRepositories: IUserRepositories, 
                     userRepositoriesPresenter.userRepos.addAll(repos)
                     viewState.updateList()
                 }, {
-                Log.e(TAG, "Error: ${it.message}")
-            })
+                    Log.e(TAG, "Error: ${it.message}")
+                })
         }
     }
 
     fun backPressed(): Boolean {
         return true
     }
-
 
 }

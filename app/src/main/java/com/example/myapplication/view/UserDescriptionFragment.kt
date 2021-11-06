@@ -15,7 +15,6 @@ import com.example.myapplication.presenter.UserDescriptionPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-
 class UserDescriptionFragment(val imageLoader: GlideImageLoader, val user: GitHubUser) :
     MvpAppCompatFragment(),
     UserDescriptionView, BackButtonListener {
@@ -66,7 +65,6 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader, val user: GitHu
     override fun updateList() {
         adapter?.notifyDataSetChanged()
     }
-
 
     override fun onBackPressed(): Boolean {
         presenter.backPressed()

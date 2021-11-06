@@ -1,7 +1,6 @@
 package com.example.myapplication.database
 
 import androidx.room.*
-import com.example.myapplication.model.UserRepository
 
 @Dao
 interface RoomGitHubUserDao {

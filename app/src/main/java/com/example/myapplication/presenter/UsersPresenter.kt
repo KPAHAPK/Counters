@@ -1,7 +1,6 @@
 package com.example.myapplication.presenter
 
 import android.util.Log
-import com.example.myapplication.App
 import com.example.myapplication.UsersListView
 import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.model.IGitHubUsersRepo
