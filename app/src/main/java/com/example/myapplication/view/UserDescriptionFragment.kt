@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.App
+import com.example.myapplication.AppNetworkStatus
 import com.example.myapplication.UserDescriptionView
 import com.example.myapplication.api.RetrofitHolder
+import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.databinding.FragmentUserDecriptionBinding
 import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.model.RetrofitUserRepositories
@@ -32,7 +34,8 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader, val userId: Git
     val presenter by moxyPresenter {
         UserDescriptionPresenter(
             RetrofitUserRepositories(
-                RetrofitHolder.iDataSource
+                RetrofitHolder.iDataSource, AppNetworkStatus(context) ,
+                AppDatabase.getInstance()
             ), userId, App.instance.router
         )
     }

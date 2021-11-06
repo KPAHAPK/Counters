@@ -12,9 +12,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
 
 class UserDescriptionPresenter(
-    val retrofitUserRepositories: IUserRepositories,
-    val userId: GitHubUser,
-    val router: Router
+    private val retrofitUserRepositories: IUserRepositories,
+    private val user: GitHubUser,
+    private val router: Router
 ) :
     MvpPresenter<UserDescriptionView>() {
 
@@ -26,8 +26,8 @@ class UserDescriptionPresenter(
 
         override fun bindView(view: IRepoItemView) {
             val repo = userRepos[view.pos]
-            repo.repoName?.let {
-                view.setRepoName(repo.repoName)
+            repo.name?.let {
+                view.setRepoName(repo.name)
             }
 
         }
@@ -49,17 +49,15 @@ class UserDescriptionPresenter(
     }
 
     fun loadDataFromServer() {
-        userId.login?.let {
-            retrofitUserRepositories.getUserRepos(it)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ repos ->
-                    userRepositoriesPresenter.userRepos.clear()
-                    userRepositoriesPresenter.userRepos.addAll(repos)
-                    viewState.updateList()
-                }, {
-                    Log.e(TAG, "Error: ${it.message}")
-                })
-        }
+        retrofitUserRepositories.getUserRepos(user)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ repos ->
+                userRepositoriesPresenter.userRepos.clear()
+                userRepositoriesPresenter.userRepos.addAll(repos)
+                viewState.updateList()
+            }, {
+                Log.e(TAG, "Error: ${it.message}")
+            })
     }
 
     fun backPressed(): Boolean {

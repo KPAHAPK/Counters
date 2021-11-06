@@ -7,14 +7,13 @@ import android.net.NetworkRequest
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 
-class AppNetworkStatus(context: Context) : INetworkStatus {
+class AppNetworkStatus(context: Context?) : INetworkStatus {
     private val statusSubject: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     init {
-        statusSubject.onNext(false)
 
         val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val request = NetworkRequest.Builder().build()
 

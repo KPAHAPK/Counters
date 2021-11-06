@@ -35,7 +35,7 @@ class UsersRVAdapter(
             binding.userLogin.text = login
         }
 
-        override fun setId(id: Int?) {
+        override fun setId(id: String?) {
             binding.userId.text = id.toString()
         }
 

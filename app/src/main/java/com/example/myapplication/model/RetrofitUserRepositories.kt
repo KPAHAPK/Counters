@@ -13,17 +13,17 @@ class RetrofitUserRepositories(
     private val db: AppDatabase
 ) :
     IUserRepositories {
-    override fun getUserRepos(userId: String): Single<List<UserRepository>> =
+    override fun getUserRepos(user: GitHubUser): Single<List<UserRepository>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getUserRepositories(userId).flatMap { userRepositories ->
+                api.getUserRepositories(user.login).flatMap { userRepositories ->
                     Single.fromCallable {
                         val roomUserRepositories = userRepositories.map { userRepository ->
                             RoomUserRepository(
                                 userRepository.id ?: "",
-                                userRepository.repoName ?: "",
+                                userRepository.name ?: "",
                                 userRepository.forksCount ?: "",
-                                userId ?: ""
+                                user.id ?: ""
                             )
                         }
                         db.roomUserRepositoryDao().insertAll(roomUserRepositories)

@@ -8,7 +8,7 @@ interface RoomGitHubUserDao {
     @Query("SELECT * FROM room_github_user")
     fun getAll(): List<RoomGitHubUser>
 
-    @Query("SELECT * FROM room_github_user WHERE uId IN (:userIds)")
+    @Query("SELECT * FROM room_github_user WHERE u_id IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<RoomGitHubUser>
 
     @Query("SELECT * FROM room_github_user WHERE login = :login LIMIT 1")

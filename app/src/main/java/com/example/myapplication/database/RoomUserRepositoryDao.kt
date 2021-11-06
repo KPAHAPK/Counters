@@ -37,6 +37,6 @@ interface RoomUserRepositoryDao {
     fun getAll(): List<RoomUserRepository>
 
     @Query("SELECT * FROM room_user_repository WHERE owner_id = :ownerId")
-    fun getAllUserRepositories(ownerId: String): List<UserRepository>
+    fun getAllUserRepositories(ownerId: String): List<RoomUserRepository>
 
 }
