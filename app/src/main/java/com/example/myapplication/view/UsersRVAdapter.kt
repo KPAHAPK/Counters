@@ -2,11 +2,12 @@ package com.example.myapplication.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.UserBinding
 import com.example.myapplication.presenter.IUserListPresenter
 
-class UsersRVAdapter(private val presenter: IUserListPresenter) :
+class UsersRVAdapter(private val presenter: IUserListPresenter, val imageLoader: IImageLoader<ImageView>) :
     RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -23,10 +24,20 @@ class UsersRVAdapter(private val presenter: IUserListPresenter) :
 
     override fun getItemCount() = presenter.getCount()
 
-    inner class ViewHolder(private val binding: UserBinding) : RecyclerView.ViewHolder(binding.root),
+    inner class ViewHolder(private val binding: UserBinding) :
+        RecyclerView.ViewHolder(binding.root),
         IUserItemView {
-        override fun setUserIdentifiers(text: String, id: Int) = with(binding) {
-            tvLogin.text = text + id
+
+        override fun setLogin(login: String?) {
+            binding.userLogin.text = login
+        }
+
+        override fun setId(id: Int?) {
+            binding.userId.text = id.toString()
+        }
+
+        override fun loadAvatar(avatar: String?) {
+            imageLoader.loadInto(avatar, binding.userAvatar)
         }
 
         override var pos = -1

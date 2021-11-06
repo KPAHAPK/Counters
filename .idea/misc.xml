@@ -5,9 +5,13 @@
       <map>
         <entry key="..\:/IT/GB/PopularLibraries/first/app/src/main/res/layout/activity_main.xml" value="0.12685185185185185" />
         <entry key="..\:/IT/GB/PopularLibraries/first/app/src/main/res/layout/fragment_user_decription.xml" value="0.24320652173913043" />
+        <entry key="..\:/IT/GB/PopularLibraries/first/app/src/main/res/layout/fragment_user_repository.xml" value="0.3625" />
+        <entry key="..\:/IT/GB/PopularLibraries/first/app/src/main/res/layout/fragment_user_repository_info.xml" value="0.67" />
         <entry key="..\:/IT/GB/PopularLibraries/first/app/src/main/res/layout/fragment_users.xml" value="0.36666666666666664" />
         <entry key="..\:/IT/GB/PopularLibraries/first/app/src/main/res/layout/user.xml" value="0.36666666666666664" />
         <entry key="..\:/IT/GB/PopularLibraries/first/app/src/main/res/layout/user_decription.xml" value="0.36666666666666664" />
+        <entry key="..\:/IT/GB/PopularLibraries/first/app/src/main/res/layout/user_repository_info_item.xml" value="0.3625" />
+        <entry key="..\:/IT/GB/PopularLibraries/first/app/src/main/res/layout/user_reposity_item.xml" value="0.3625" />
       </map>
     </option>
   </component>

@@ -1,22 +1,20 @@
 package com.example.myapplication.presenter
 
-import com.example.myapplication.GitHubUser
-import com.example.myapplication.GitHubUsersRepo
+import android.util.Log
 import com.example.myapplication.UsersListView
+import com.example.myapplication.model.GitHubUser
+import com.example.myapplication.model.IGitHibUsersRepo
 import com.example.myapplication.screens.AndroidScreens
 import com.example.myapplication.view.IUserItemView
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 
-class UsersPresenter(private val usersRepo: GitHubUsersRepo, val router: Router) :
-    MvpPresenter<UsersListView>() {
+const val TAG = "UsersPresenter"
 
-    val disposable = CompositeDisposable()
+class UsersPresenter(private val retrofitUsersRepo: IGitHibUsersRepo, val router: Router) :
+    MvpPresenter<UsersListView>() {
 
     private val screens = AndroidScreens()
 
@@ -28,7 +26,12 @@ class UsersPresenter(private val usersRepo: GitHubUsersRepo, val router: Router)
 
         override fun bindView(view: IUserItemView) {
             val user = users[view.pos]
-            view.setUserIdentifiers(user.login, user.id)
+            user.login?.let {
+                view.setLogin(user.login)
+                view.setId(user.id)
+                view.loadAvatar(user.avatarUrl)
+            }
+
         }
     }
 
@@ -37,47 +40,23 @@ class UsersPresenter(private val usersRepo: GitHubUsersRepo, val router: Router)
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.init()
+        loadDataFromServer()
 
         usersListPresenter.itemClickListener = { itemView ->
             router.navigateTo(screens.userDescription(usersListPresenter.users[itemView.pos]))
         }
     }
 
-    fun loadDataRX() {
-        val observable : Disposable = getDataToObserve( 300)
-            .take(10)
-            .subscribeOn(Schedulers.newThread())
+    fun loadDataFromServer() {
+        retrofitUsersRepo.getGitHubUsers()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ user -> usersListPresenter.users.add(user)
-                       viewState.updateList() },{})
-        disposable.add(observable)
-    }
-
-    fun loadDataRXFilter() {
-        val observable : Disposable = getDataToObserve( 10)
-            .filter{it.id % 10 == 0}
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ user -> usersListPresenter.users.add(user)
-                       viewState.updateList() },{})
-        disposable.add(observable)
-    }
-
-    private fun getDataToObserve(delay: Long = 0) : Observable<GitHubUser>{
-        return Observable.create {user ->
-            for (gitHubUser in usersRepo.getUsers()){
-                if (delay != 0L) {
-                    Thread.sleep(delay)
-                }
-                user.onNext(gitHubUser)
-            }
-        }
-    }
-
-    fun loadData() {
-        val users = usersRepo.getUsers()
-        usersListPresenter.users.addAll(users)
-        viewState.updateList()
+            .subscribe({ usersRepo ->
+                usersListPresenter.users.clear()
+                usersListPresenter.users.addAll(usersRepo)
+                viewState.updateList()
+            }, {
+                Log.e(TAG, "Error: ${it.message}")
+            })
     }
 
     fun clearList() {
