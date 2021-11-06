@@ -24,9 +24,12 @@ class UsersFragment : MvpAppCompatFragment(), UsersListView, BackButtonListener 
     }
 
     val presenter: UsersPresenter by moxyPresenter {
-        UsersPresenter(RetrofitGitHubUserRepo(RetrofitHolder.iDataSource, AppNetworkStatus(context),
-            RoomGithubUserCache(AppDatabase.getInstance())
-        ), App.instance.router)
+        UsersPresenter(
+            RetrofitGitHubUserRepo(
+                RetrofitHolder.iDataSource, AppNetworkStatus(context),
+                RoomGithubUserCache(AppDatabase.getInstance())
+            ), App.instance.router
+        )
     }
 
     var adapter: UsersRVAdapter? = null

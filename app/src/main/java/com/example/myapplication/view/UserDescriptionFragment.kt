@@ -35,7 +35,7 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader, val userId: Git
     val presenter by moxyPresenter {
         UserDescriptionPresenter(
             RetrofitUserRepository(
-                RetrofitHolder.iDataSource, AppNetworkStatus(context) ,
+                RetrofitHolder.iDataSource, AppNetworkStatus(context),
                 RoomUserRepositoryCache(AppDatabase.getInstance())
             ), userId, App.instance.router
         )

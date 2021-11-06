@@ -3,7 +3,6 @@ package com.example.myapplication.model
 import com.example.myapplication.INetworkStatus
 import com.example.myapplication.api.IDataSource
 import com.example.myapplication.cache.IUserRepositoryCache
-import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.database.RoomUserRepository
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
