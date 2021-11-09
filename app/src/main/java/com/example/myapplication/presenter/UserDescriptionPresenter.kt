@@ -8,10 +8,11 @@ import com.example.myapplication.model.UserRepository
 import com.example.myapplication.screens.AndroidScreens
 import com.example.myapplication.view.IRepoItemView
 import com.github.terrakok.cicerone.Router
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 
 class UserDescriptionPresenter(
+    private val uiSchedulers: Scheduler,
     private val retrofitUserRepository: IUserRepository,
     private val user: GitHubUser,
     private val router: Router
@@ -50,7 +51,7 @@ class UserDescriptionPresenter(
 
     fun loadDataFromServer() {
         retrofitUserRepository.getUserRepos(user)
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(uiSchedulers)
             .subscribe({ repos ->
                 userRepositoriesPresenter.userRepos.clear()
                 userRepositoriesPresenter.userRepos.addAll(repos)

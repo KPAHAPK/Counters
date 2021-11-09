@@ -6,30 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.App
-import com.example.myapplication.AppNetworkStatus
 import com.example.myapplication.UsersListView
-import com.example.myapplication.api.RetrofitHolder
-import com.example.myapplication.cache.RoomGithubUserCache
-import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.databinding.FragmentUsersBinding
-import com.example.myapplication.model.RetrofitGitHubUserRepo
 import com.example.myapplication.presenter.UsersPresenter
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 class UsersFragment : MvpAppCompatFragment(), UsersListView, BackButtonListener {
 
     companion object {
-        fun newInstance() = UsersFragment()
+        fun newInstance() = UsersFragment().apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     val presenter: UsersPresenter by moxyPresenter {
-        UsersPresenter(
-            RetrofitGitHubUserRepo(
-                RetrofitHolder.iDataSource, AppNetworkStatus(context),
-                RoomGithubUserCache(AppDatabase.getInstance())
-            ), App.instance.router
-        )
+        UsersPresenter(AndroidSchedulers.mainThread()).apply { App.instance.appComponent.inject(this) }
     }
 
     var adapter: UsersRVAdapter? = null

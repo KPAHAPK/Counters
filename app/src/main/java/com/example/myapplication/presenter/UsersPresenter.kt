@@ -4,18 +4,24 @@ import android.util.Log
 import com.example.myapplication.UsersListView
 import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.model.IGitHubUsersRepo
-import com.example.myapplication.screens.AndroidScreens
+import com.example.myapplication.screens.IScreens
 import com.example.myapplication.view.IUserItemView
 import com.github.terrakok.cicerone.Router
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
+import javax.inject.Inject
 
 const val TAG = "UsersPresenter"
 
-class UsersPresenter(private val retrofitUsersRepo: IGitHubUsersRepo, val router: Router) :
+class UsersPresenter(val uiSchedulers: Scheduler) :
     MvpPresenter<UsersListView>() {
 
-    private val screens = AndroidScreens()
+    @Inject
+    lateinit var screens: IScreens
+    @Inject
+    lateinit var router: Router
+    @Inject
+    lateinit var usersRepo: IGitHubUsersRepo
 
     class UsersListPresenter : IUserListPresenter {
         val users = mutableListOf<GitHubUser>()
@@ -47,8 +53,8 @@ class UsersPresenter(private val retrofitUsersRepo: IGitHubUsersRepo, val router
     }
 
     fun loadDataFromServer() {
-        retrofitUsersRepo.getGitHubUsers()
-            .observeOn(AndroidSchedulers.mainThread())
+        usersRepo.getGitHubUsers()
+            .observeOn(uiSchedulers)
             .subscribe({ usersRepo ->
                 usersListPresenter.users.clear()
                 usersListPresenter.users.addAll(usersRepo)

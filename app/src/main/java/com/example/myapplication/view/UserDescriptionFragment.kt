@@ -15,10 +15,13 @@ import com.example.myapplication.databinding.FragmentUserDecriptionBinding
 import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.model.RetrofitUserRepository
 import com.example.myapplication.presenter.UserDescriptionPresenter
+import com.github.terrakok.cicerone.Router
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
-class UserDescriptionFragment(val imageLoader: GlideImageLoader, val userId: GitHubUser) :
+class UserDescriptionFragment() :
     MvpAppCompatFragment(),
     UserDescriptionView, BackButtonListener {
 
@@ -29,15 +32,35 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader, val userId: Git
     private var adapter: UserRepositoriesRVAdapter? = null
 
     companion object {
-        fun newInstance(userId: GitHubUser) = UserDescriptionFragment(GlideImageLoader(), userId)
+        private const val USER_ARG = "user"
+
+        fun newInstance(user: GitHubUser) = UserDescriptionFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(USER_ARG, user)
+            }
+            App.instance.appComponent.inject(this)
+        }
+
     }
 
+    @Inject
+    lateinit var database: AppDatabase
+
+    @Inject
+    lateinit var router: Router
+
+    private lateinit var user: GitHubUser
+
+    var imageLoader = GlideImageLoader()
+
     val presenter by moxyPresenter {
+        user = arguments?.getParcelable<GitHubUser>(USER_ARG) as GitHubUser
         UserDescriptionPresenter(
+            AndroidSchedulers.mainThread(),
             RetrofitUserRepository(
                 RetrofitHolder.iDataSource, AppNetworkStatus(context),
-                RoomUserRepositoryCache(AppDatabase.getInstance())
-            ), userId, App.instance.router
+                RoomUserRepositoryCache(database)
+            ), user, router
         )
     }
 
@@ -62,8 +85,8 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader, val userId: Git
         adapter = UserRepositoriesRVAdapter(presenter.userRepositoriesPresenter)
         binding.rvRepositories.adapter = adapter
 
-        binding.userLogin.text = userId.login
-        imageLoader.loadInto(userId.avatarUrl, binding.userAvatar)
+        binding.userLogin.text = user.login
+        imageLoader.loadInto(user.avatarUrl, binding.userAvatar)
     }
 
     override fun updateList() {
