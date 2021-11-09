@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.UserBinding
 import com.example.myapplication.presenter.IUserListPresenter
 
-class UsersRVAdapter(private val presenter: IUserListPresenter, val imageLoader: IImageLoader<ImageView>) :
+class UsersRVAdapter(
+    private val presenter: IUserListPresenter,
+    val imageLoader: IImageLoader<ImageView>
+) :
     RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -32,7 +35,7 @@ class UsersRVAdapter(private val presenter: IUserListPresenter, val imageLoader:
             binding.userLogin.text = login
         }
 
-        override fun setId(id: Int?) {
+        override fun setId(id: String?) {
             binding.userId.text = id.toString()
         }
 

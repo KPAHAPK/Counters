@@ -2,6 +2,6 @@ package com.example.myapplication.model
 
 import io.reactivex.rxjava3.core.Single
 
-interface IGitHibUsersRepo {
+interface IGitHubUsersRepo {
     fun getGitHubUsers(): Single<List<GitHubUser>>
 }

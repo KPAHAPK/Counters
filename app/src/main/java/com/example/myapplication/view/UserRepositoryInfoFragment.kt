@@ -51,7 +51,7 @@ class UserRepositoryInfoFragment() :
     override fun init() {
         val repo = arguments?.getParcelable<UserRepository>(ARG_1)
         binding.repositoryName.text = repo?.name
-        binding.forkTitile.text = getString(R.string.fork, repo?.forks.toString())
+        binding.forkTitile.text = getString(R.string.fork, repo?.forksCount.toString())
     }
 
     override fun onDestroyView() {

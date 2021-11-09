@@ -6,18 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.App
+import com.example.myapplication.AppNetworkStatus
 import com.example.myapplication.UserDescriptionView
 import com.example.myapplication.api.RetrofitHolder
+import com.example.myapplication.cache.RoomUserRepositoryCache
+import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.databinding.FragmentUserDecriptionBinding
 import com.example.myapplication.model.GitHubUser
-import com.example.myapplication.model.RetrofitUserRepositories
+import com.example.myapplication.model.RetrofitUserRepository
 import com.example.myapplication.presenter.UserDescriptionPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-private const val ARG_1 = "user"
-
-class UserDescriptionFragment(val imageLoader: GlideImageLoader, val user: GitHubUser) :
+class UserDescriptionFragment(val imageLoader: GlideImageLoader, val userId: GitHubUser) :
     MvpAppCompatFragment(),
     UserDescriptionView, BackButtonListener {
 
@@ -28,14 +29,15 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader, val user: GitHu
     private var adapter: UserRepositoriesRVAdapter? = null
 
     companion object {
-        fun newInstance(user: GitHubUser) = UserDescriptionFragment(GlideImageLoader(), user)
+        fun newInstance(userId: GitHubUser) = UserDescriptionFragment(GlideImageLoader(), userId)
     }
 
     val presenter by moxyPresenter {
         UserDescriptionPresenter(
-            RetrofitUserRepositories(
-                RetrofitHolder.iDataSource
-            ), user, App.instance.router
+            RetrofitUserRepository(
+                RetrofitHolder.iDataSource, AppNetworkStatus(context),
+                RoomUserRepositoryCache(AppDatabase.getInstance())
+            ), userId, App.instance.router
         )
     }
 
@@ -60,14 +62,13 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader, val user: GitHu
         adapter = UserRepositoriesRVAdapter(presenter.userRepositoriesPresenter)
         binding.rvRepositories.adapter = adapter
 
-        binding.userLogin.text = user.login
-        imageLoader.loadInto(user.avatarUrl, binding.userAvatar)
+        binding.userLogin.text = userId.login
+        imageLoader.loadInto(userId.avatarUrl, binding.userAvatar)
     }
 
     override fun updateList() {
         adapter?.notifyDataSetChanged()
     }
-
 
     override fun onBackPressed(): Boolean {
         presenter.backPressed()

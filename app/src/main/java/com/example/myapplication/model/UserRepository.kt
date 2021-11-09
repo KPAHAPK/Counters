@@ -6,7 +6,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UserRepository(
+    @Expose val id: String?,
     @Expose val name: String?,
-    @Expose val forks: Int?
+    @Expose val forksCount: String?
 ) : Parcelable {
 }

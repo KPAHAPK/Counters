@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.App
+import com.example.myapplication.AppNetworkStatus
 import com.example.myapplication.UsersListView
 import com.example.myapplication.api.RetrofitHolder
+import com.example.myapplication.cache.RoomGithubUserCache
+import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.databinding.FragmentUsersBinding
-import com.example.myapplication.model.GitHubUsersRepo
 import com.example.myapplication.model.RetrofitGitHubUserRepo
 import com.example.myapplication.presenter.UsersPresenter
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -23,7 +24,12 @@ class UsersFragment : MvpAppCompatFragment(), UsersListView, BackButtonListener 
     }
 
     val presenter: UsersPresenter by moxyPresenter {
-        UsersPresenter(RetrofitGitHubUserRepo(RetrofitHolder.iDataSource), App.instance.router)
+        UsersPresenter(
+            RetrofitGitHubUserRepo(
+                RetrofitHolder.iDataSource, AppNetworkStatus(context),
+                RoomGithubUserCache(AppDatabase.getInstance())
+            ), App.instance.router
+        )
     }
 
     var adapter: UsersRVAdapter? = null
@@ -63,7 +69,6 @@ class UsersFragment : MvpAppCompatFragment(), UsersListView, BackButtonListener 
         adapter = UsersRVAdapter(presenter.usersListPresenter, GlideImageLoader())
         binding.rvUsers.adapter = adapter
     }
-
 
     override fun updateList() {
         adapter?.notifyDataSetChanged()

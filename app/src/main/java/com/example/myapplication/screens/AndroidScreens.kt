@@ -2,7 +2,6 @@ package com.example.myapplication.screens
 
 import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.model.UserRepository
-import com.example.myapplication.presenter.UserRepositoryInfoPresenter
 import com.example.myapplication.view.UserDescriptionFragment
 import com.example.myapplication.view.UserRepositoryInfoFragment
 import com.example.myapplication.view.UsersFragment
@@ -14,13 +13,12 @@ class AndroidScreens : IScreens {
         return FragmentScreen { UsersFragment.newInstance() }
     }
 
-    override fun userDescription(user: GitHubUser): Screen {
-        return FragmentScreen { UserDescriptionFragment.newInstance(user) }
+    override fun userDescription(userId: GitHubUser): Screen {
+        return FragmentScreen { UserDescriptionFragment.newInstance(userId) }
     }
 
     override fun repositoryInfo(repo: UserRepository): Screen {
         return FragmentScreen { UserRepositoryInfoFragment.newInstance(repo) }
     }
-
 
 }
