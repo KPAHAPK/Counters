@@ -6,21 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.myapplication.App
 import com.example.myapplication.R
-import com.example.myapplication.UserRepositoryInfoView
 import com.example.myapplication.databinding.FragmentUserRepositoryInfoBinding
 import com.example.myapplication.model.UserRepository
 import com.example.myapplication.presenter.UserRepositoryInfoPresenter
-import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import javax.inject.Inject
 
 class UserRepositoryInfoFragment() :
     MvpAppCompatFragment(), UserRepositoryInfoView, BackButtonListener {
-
-    //TODO Move to presenter
-    @Inject
-    lateinit var router: Router
 
     private var _binding: FragmentUserRepositoryInfoBinding? = null
     private val binding: FragmentUserRepositoryInfoBinding
@@ -33,15 +26,16 @@ class UserRepositoryInfoFragment() :
             arguments = Bundle().apply {
                 putParcelable(REPOSITORY_ARG, repository)
             }
-            App.instance.appComponent.inject(this)
         }
     }
 
-    lateinit var repository: UserRepository
+    private lateinit var repository: UserRepository
 
     val presenter by moxyPresenter {
         repository = arguments?.getParcelable<UserRepository>(REPOSITORY_ARG) as UserRepository
-        UserRepositoryInfoPresenter(router, repository)
+        UserRepositoryInfoPresenter(repository).apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     override fun onCreateView(

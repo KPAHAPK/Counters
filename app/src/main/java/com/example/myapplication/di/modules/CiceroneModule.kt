@@ -14,7 +14,6 @@ class CiceroneModule {
 
     var cicerone: Cicerone<Router> = Cicerone.create()
 
-    @Provides
     fun cicerone(): Cicerone<Router> = cicerone
 
     @Provides

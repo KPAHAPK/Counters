@@ -6,7 +6,6 @@ import com.example.myapplication.presenter.UserDescriptionPresenter
 import com.example.myapplication.presenter.UserRepositoryInfoPresenter
 import com.example.myapplication.presenter.UsersPresenter
 import com.example.myapplication.view.MainActivity
-import com.example.myapplication.view.UserRepositoryInfoFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -18,17 +17,16 @@ import javax.inject.Singleton
         CacheModule::class,
         CiceroneModule::class,
         RepoModule::class,
-        RepositoriesModule::class
+        RepositoriesModule::class,
+        SchedulersModule::class
     ]
 )
 interface AppComponent {
 
-    //TODO Delete Fragments
     fun inject(mainActivity: MainActivity)
     fun inject(mainPresenter: MainPresenter)
     fun inject(usersPresenter: UsersPresenter)
     fun inject(userDescriptionPresenter: UserDescriptionPresenter)
-    fun inject(userRepositoryInfoFragment: UserRepositoryInfoFragment)//
     fun inject(userRepositoryInfoPresenter: UserRepositoryInfoPresenter)
 
 }

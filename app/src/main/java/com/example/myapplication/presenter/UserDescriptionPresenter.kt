@@ -1,19 +1,19 @@
 package com.example.myapplication.presenter
 
 import android.util.Log
-import com.example.myapplication.UserDescriptionView
 import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.model.IUserRepository
 import com.example.myapplication.model.UserRepository
 import com.example.myapplication.screens.IScreens
 import com.example.myapplication.view.IRepoItemView
+import com.example.myapplication.view.UserDescriptionView
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import javax.inject.Inject
+import javax.inject.Named
 
 class UserDescriptionPresenter(
-    private val uiSchedulers: Scheduler,
     private val user: GitHubUser
 ) : MvpPresenter<UserDescriptionView>() {
 
@@ -29,6 +29,9 @@ class UserDescriptionPresenter(
 
     @Inject
     lateinit var repositoriesRepo: IUserRepository
+
+    @field:[Inject Named("Main")]
+    lateinit var uiSchedulers: Scheduler
 
     class UserRepositoriesPresenter : IUserRepositoriesPresenter {
         val userRepos = mutableListOf<UserRepository>()

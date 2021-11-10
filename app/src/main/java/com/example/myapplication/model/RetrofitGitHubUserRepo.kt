@@ -12,6 +12,7 @@ class RetrofitGitHubUserRepo(
     private val networkStatus: INetworkStatus,
     private val cache: IGithubUserCache
 ) : IGitHubUsersRepo {
+
     override fun getGitHubUsers(): Single<List<GitHubUser>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {

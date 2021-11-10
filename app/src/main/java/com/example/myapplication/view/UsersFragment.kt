@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.App
-import com.example.myapplication.UsersListView
 import com.example.myapplication.databinding.FragmentUsersBinding
 import com.example.myapplication.presenter.UsersPresenter
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -20,7 +18,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersListView, BackButtonListener 
     }
 
     val presenter: UsersPresenter by moxyPresenter {
-        UsersPresenter(AndroidSchedulers.mainThread()).apply {
+        UsersPresenter().apply {
             App.instance.appComponent.inject(this)
         }
     }

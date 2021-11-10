@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.App
-import com.example.myapplication.UserDescriptionView
 import com.example.myapplication.databinding.FragmentUserDecriptionBinding
 import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.presenter.UserDescriptionPresenter
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -41,7 +39,6 @@ class UserDescriptionFragment() :
     val presenter by moxyPresenter {
         user = arguments?.getParcelable<GitHubUser>(USER_ARG) as GitHubUser
         UserDescriptionPresenter(
-            AndroidSchedulers.mainThread(),
             user
         ).apply {
             App.instance.appComponent.inject(this)
