@@ -11,17 +11,22 @@ import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import javax.inject.Inject
 
-const val TAG = "UsersPresenter"
-
 class UsersPresenter(val uiSchedulers: Scheduler) :
     MvpPresenter<UsersListView>() {
 
+    companion object {
+        const val TAG = "UsersPresenter"
+    }
+
     @Inject
     lateinit var screens: IScreens
+
     @Inject
     lateinit var router: Router
+
     @Inject
     lateinit var usersRepo: IGitHubUsersRepo
+    //TODO: Inject uiSchedulers
 
     class UsersListPresenter : IUserListPresenter {
         val users = mutableListOf<GitHubUser>()

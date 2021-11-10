@@ -21,15 +21,11 @@ class RetrofitGitHubUserRepo(
                             RoomGitHubUser(user.id ?: "", user.login ?: "", user.avatarUrl ?: "")
                         }
                         cache.saveCache(roomGithubUsers)
-                        //  db.roomGitHubUserDao().insertAll(roomGithubUsers)
                         githubUsers
                     }
                 }
             } else {
                 Single.fromCallable {
-//                db.roomGitHubUserDao().getAll().map { roomGitHubUser ->
-//                    GitHubUser(roomGitHubUser.uId, roomGitHubUser.login, roomGitHubUser.avatarUrl)
-//                }
                     cache.getCache()
                 }
             }

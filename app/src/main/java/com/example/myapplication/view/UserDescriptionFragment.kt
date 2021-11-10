@@ -6,20 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.App
-import com.example.myapplication.AppNetworkStatus
 import com.example.myapplication.UserDescriptionView
-import com.example.myapplication.api.RetrofitHolder
-import com.example.myapplication.cache.RoomUserRepositoryCache
-import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.databinding.FragmentUserDecriptionBinding
 import com.example.myapplication.model.GitHubUser
-import com.example.myapplication.model.RetrofitUserRepository
 import com.example.myapplication.presenter.UserDescriptionPresenter
-import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import javax.inject.Inject
 
 class UserDescriptionFragment() :
     MvpAppCompatFragment(),
@@ -38,16 +31,8 @@ class UserDescriptionFragment() :
             arguments = Bundle().apply {
                 putParcelable(USER_ARG, user)
             }
-            App.instance.appComponent.inject(this)
         }
-
     }
-
-    @Inject
-    lateinit var database: AppDatabase
-
-    @Inject
-    lateinit var router: Router
 
     private lateinit var user: GitHubUser
 
@@ -57,11 +42,10 @@ class UserDescriptionFragment() :
         user = arguments?.getParcelable<GitHubUser>(USER_ARG) as GitHubUser
         UserDescriptionPresenter(
             AndroidSchedulers.mainThread(),
-            RetrofitUserRepository(
-                RetrofitHolder.iDataSource, AppNetworkStatus(context),
-                RoomUserRepositoryCache(database)
-            ), user, router
-        )
+            user
+        ).apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     override fun onCreateView(

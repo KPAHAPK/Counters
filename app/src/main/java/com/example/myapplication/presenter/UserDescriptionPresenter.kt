@@ -5,21 +5,30 @@ import com.example.myapplication.UserDescriptionView
 import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.model.IUserRepository
 import com.example.myapplication.model.UserRepository
-import com.example.myapplication.screens.AndroidScreens
+import com.example.myapplication.screens.IScreens
 import com.example.myapplication.view.IRepoItemView
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
+import javax.inject.Inject
 
 class UserDescriptionPresenter(
     private val uiSchedulers: Scheduler,
-    private val retrofitUserRepository: IUserRepository,
-    private val user: GitHubUser,
-    private val router: Router
-) :
-    MvpPresenter<UserDescriptionView>() {
+    private val user: GitHubUser
+) : MvpPresenter<UserDescriptionView>() {
 
-    private val screens = AndroidScreens()
+    companion object {
+        const val TAG = "UserDescriptionPresenter"
+    }
+
+    @Inject
+    lateinit var screens: IScreens
+
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var repositoriesRepo: IUserRepository
 
     class UserRepositoriesPresenter : IUserRepositoriesPresenter {
         val userRepos = mutableListOf<UserRepository>()
@@ -49,8 +58,8 @@ class UserDescriptionPresenter(
         }
     }
 
-    fun loadDataFromServer() {
-        retrofitUserRepository.getUserRepos(user)
+    private fun loadDataFromServer() {
+        repositoriesRepo.getUserRepos(user)
             .observeOn(uiSchedulers)
             .subscribe({ repos ->
                 userRepositoriesPresenter.userRepos.clear()

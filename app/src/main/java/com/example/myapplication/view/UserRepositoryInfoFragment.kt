@@ -15,11 +15,10 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 
-private const val ARG_1 = "KEY"
-
 class UserRepositoryInfoFragment() :
     MvpAppCompatFragment(), UserRepositoryInfoView, BackButtonListener {
 
+    //TODO Move to presenter
     @Inject
     lateinit var router: Router
 
