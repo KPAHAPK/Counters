@@ -34,7 +34,8 @@ class UserRepositoryInfoFragment() :
     val presenter by moxyPresenter {
         repository = arguments?.getParcelable<UserRepository>(REPOSITORY_ARG) as UserRepository
         UserRepositoryInfoPresenter(repository).apply {
-            App.instance.appComponent.inject(this)
+            App.instance.repositorySubcomponent?.inject(this)
+
         }
     }
 
