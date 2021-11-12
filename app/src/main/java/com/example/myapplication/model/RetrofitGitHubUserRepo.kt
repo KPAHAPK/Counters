@@ -12,6 +12,7 @@ class RetrofitGitHubUserRepo(
     private val networkStatus: INetworkStatus,
     private val cache: IGithubUserCache
 ) : IGitHubUsersRepo {
+
     override fun getGitHubUsers(): Single<List<GitHubUser>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
@@ -21,15 +22,11 @@ class RetrofitGitHubUserRepo(
                             RoomGitHubUser(user.id ?: "", user.login ?: "", user.avatarUrl ?: "")
                         }
                         cache.saveCache(roomGithubUsers)
-                        //  db.roomGitHubUserDao().insertAll(roomGithubUsers)
                         githubUsers
                     }
                 }
             } else {
                 Single.fromCallable {
-//                db.roomGitHubUserDao().getAll().map { roomGitHubUser ->
-//                    GitHubUser(roomGitHubUser.uId, roomGitHubUser.login, roomGitHubUser.avatarUrl)
-//                }
                     cache.getCache()
                 }
             }

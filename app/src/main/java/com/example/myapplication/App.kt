@@ -1,9 +1,9 @@
 package com.example.myapplication
 
 import android.app.Application
-import com.example.myapplication.database.AppDatabase
-import com.github.terrakok.cicerone.Cicerone
-import com.github.terrakok.cicerone.Router
+import com.example.myapplication.di.components.AppComponent
+import com.example.myapplication.di.components.DaggerAppComponent
+import com.example.myapplication.di.modules.AppModule
 
 class App : Application() {
 
@@ -12,15 +12,14 @@ class App : Application() {
 
     }
 
-    private val cicerone: Cicerone<Router> by lazy {
-        Cicerone.create()
-    }
-    val navigatorHolder get() = cicerone.getNavigatorHolder()
-    val router get() = cicerone.router
+    lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
         instance = this
-        AppDatabase.create(this)
+
+        appComponent = DaggerAppComponent.builder()
+            .appModule(AppModule(this))
+            .build()
     }
 }

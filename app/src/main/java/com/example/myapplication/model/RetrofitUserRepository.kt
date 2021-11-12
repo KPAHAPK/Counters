@@ -13,6 +13,7 @@ class RetrofitUserRepository(
     private val cache: IUserRepositoryCache
 ) :
     IUserRepository {
+
     override fun getUserRepos(user: GitHubUser): Single<List<UserRepository>> =
         networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {

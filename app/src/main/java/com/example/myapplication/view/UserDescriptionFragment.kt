@@ -6,19 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.App
-import com.example.myapplication.AppNetworkStatus
-import com.example.myapplication.UserDescriptionView
-import com.example.myapplication.api.RetrofitHolder
-import com.example.myapplication.cache.RoomUserRepositoryCache
-import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.databinding.FragmentUserDecriptionBinding
 import com.example.myapplication.model.GitHubUser
-import com.example.myapplication.model.RetrofitUserRepository
 import com.example.myapplication.presenter.UserDescriptionPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-class UserDescriptionFragment(val imageLoader: GlideImageLoader, val userId: GitHubUser) :
+class UserDescriptionFragment() :
     MvpAppCompatFragment(),
     UserDescriptionView, BackButtonListener {
 
@@ -29,16 +23,26 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader, val userId: Git
     private var adapter: UserRepositoriesRVAdapter? = null
 
     companion object {
-        fun newInstance(userId: GitHubUser) = UserDescriptionFragment(GlideImageLoader(), userId)
+        private const val USER_ARG = "user"
+
+        fun newInstance(user: GitHubUser) = UserDescriptionFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(USER_ARG, user)
+            }
+        }
     }
 
+    private lateinit var user: GitHubUser
+
+    var imageLoader = GlideImageLoader()
+
     val presenter by moxyPresenter {
+        user = arguments?.getParcelable<GitHubUser>(USER_ARG) as GitHubUser
         UserDescriptionPresenter(
-            RetrofitUserRepository(
-                RetrofitHolder.iDataSource, AppNetworkStatus(context),
-                RoomUserRepositoryCache(AppDatabase.getInstance())
-            ), userId, App.instance.router
-        )
+            user
+        ).apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     override fun onCreateView(
@@ -62,8 +66,8 @@ class UserDescriptionFragment(val imageLoader: GlideImageLoader, val userId: Git
         adapter = UserRepositoriesRVAdapter(presenter.userRepositoriesPresenter)
         binding.rvRepositories.adapter = adapter
 
-        binding.userLogin.text = userId.login
-        imageLoader.loadInto(userId.avatarUrl, binding.userAvatar)
+        binding.userLogin.text = user.login
+        imageLoader.loadInto(user.avatarUrl, binding.userAvatar)
     }
 
     override fun updateList() {

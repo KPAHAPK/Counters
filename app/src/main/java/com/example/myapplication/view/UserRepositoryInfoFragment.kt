@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.myapplication.App
 import com.example.myapplication.R
-import com.example.myapplication.UserRepositoryInfoView
 import com.example.myapplication.databinding.FragmentUserRepositoryInfoBinding
 import com.example.myapplication.model.UserRepository
 import com.example.myapplication.presenter.UserRepositoryInfoPresenter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-
-private const val ARG_1 = "KEY"
 
 class UserRepositoryInfoFragment() :
     MvpAppCompatFragment(), UserRepositoryInfoView, BackButtonListener {
@@ -22,17 +20,22 @@ class UserRepositoryInfoFragment() :
         get() = _binding!!
 
     companion object {
-        fun newInstance(repo: UserRepository): UserRepositoryInfoFragment {
-            val args = Bundle()
-            args.putParcelable(ARG_1, repo)
-            return UserRepositoryInfoFragment().apply {
-                this.arguments = args
+        private const val REPOSITORY_ARG = "repository"
+
+        fun newInstance(repository: UserRepository) = UserRepositoryInfoFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(REPOSITORY_ARG, repository)
             }
         }
     }
 
+    private lateinit var repository: UserRepository
+
     val presenter by moxyPresenter {
-        UserRepositoryInfoPresenter()
+        repository = arguments?.getParcelable<UserRepository>(REPOSITORY_ARG) as UserRepository
+        UserRepositoryInfoPresenter(repository).apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     override fun onCreateView(
@@ -49,9 +52,8 @@ class UserRepositoryInfoFragment() :
     }
 
     override fun init() {
-        val repo = arguments?.getParcelable<UserRepository>(ARG_1)
-        binding.repositoryName.text = repo?.name
-        binding.forkTitile.text = getString(R.string.fork, repo?.forksCount.toString())
+        binding.repositoryName.text = repository?.name
+        binding.forkTitile.text = getString(R.string.fork, repository?.forksCount.toString())
     }
 
     override fun onDestroyView() {

@@ -1,11 +1,19 @@
 package com.example.myapplication.presenter
 
-import com.example.myapplication.MainView
 import com.example.myapplication.screens.IScreens
+import com.example.myapplication.view.MainView
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class MainPresenter(val router: Router, val screen: IScreens) : MvpPresenter<MainView>() {
+class MainPresenter() : MvpPresenter<MainView>() {
+
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var screen: IScreens
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         router.replaceScreen(screen.users())
