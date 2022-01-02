@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.App
 import com.example.myapplication.databinding.FragmentUserDecriptionBinding
+import com.example.myapplication.di.components.RepositorySubcomponent
 import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.presenter.UserDescriptionPresenter
 import moxy.MvpAppCompatFragment
@@ -32,18 +33,19 @@ class UserDescriptionFragment() :
         }
     }
 
+    val presenter by moxyPresenter {
+        user = arguments?.getParcelable<GitHubUser>(USER_ARG) as GitHubUser
+        UserDescriptionPresenter(user).apply {
+            repositorySubcomponent = App.instance.initRepositorySubcomponent()
+            repositorySubcomponent?.inject(this)
+        }
+    }
+
     private lateinit var user: GitHubUser
 
     var imageLoader = GlideImageLoader()
 
-    val presenter by moxyPresenter {
-        user = arguments?.getParcelable<GitHubUser>(USER_ARG) as GitHubUser
-        UserDescriptionPresenter(
-            user
-        ).apply {
-            App.instance.appComponent.inject(this)
-        }
-    }
+    var repositorySubcomponent: RepositorySubcomponent? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -1,6 +1,7 @@
 package com.example.myapplication.presenter
 
 import android.util.Log
+import com.example.myapplication.di.scope.IRepositoryScopeContainer
 import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.model.IUserRepository
 import com.example.myapplication.model.UserRepository
@@ -32,6 +33,8 @@ class UserDescriptionPresenter(
 
     @field:[Inject Named("Main")]
     lateinit var uiSchedulers: Scheduler
+
+    var repositoryScopeContainer: IRepositoryScopeContainer? = null
 
     class UserRepositoriesPresenter : IUserRepositoriesPresenter {
         val userRepos = mutableListOf<UserRepository>()
@@ -75,6 +78,11 @@ class UserDescriptionPresenter(
 
     fun backPressed(): Boolean {
         return true
+    }
+
+    override fun onDestroy() {
+        repositoryScopeContainer?.releaseRepositoryScope()
+        super.onDestroy()
     }
 
 }

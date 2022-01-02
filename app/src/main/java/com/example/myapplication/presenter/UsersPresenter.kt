@@ -1,6 +1,7 @@
 package com.example.myapplication.presenter
 
 import android.util.Log
+import com.example.myapplication.di.scope.IUserScopeContainer
 import com.example.myapplication.model.GitHubUser
 import com.example.myapplication.model.IGitHubUsersRepo
 import com.example.myapplication.screens.IScreens
@@ -30,6 +31,8 @@ class UsersPresenter :
 
     @field:[Inject Named("Main")]
     lateinit var uiSchedulers: Scheduler
+
+    var userScopeContainer: IUserScopeContainer? = null
 
     class UsersListPresenter : IUserListPresenter {
         val users = mutableListOf<GitHubUser>()
@@ -81,4 +84,8 @@ class UsersPresenter :
         return true
     }
 
+    override fun onDestroy() {
+        userScopeContainer?.releaseUserScope()
+        super.onDestroy()
+    }
 }
