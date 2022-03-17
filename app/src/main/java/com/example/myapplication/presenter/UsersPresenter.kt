@@ -50,7 +50,6 @@ class UsersPresenter :
 
         }
     }
-
     val usersListPresenter = UsersListPresenter()
 
     override fun onFirstViewAttach() {
@@ -63,8 +62,10 @@ class UsersPresenter :
         }
     }
 
+    private fun getGitHubUsers() = usersRepo.getGitHubUsers()
+
     fun loadDataFromServer() {
-        usersRepo.getGitHubUsers()
+        getGitHubUsers()
             .observeOn(uiSchedulers)
             .subscribe({ usersRepo ->
                 usersListPresenter.users.clear()
