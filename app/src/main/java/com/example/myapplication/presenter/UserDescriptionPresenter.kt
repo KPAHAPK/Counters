@@ -15,7 +15,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class UserDescriptionPresenter(
-    private val user: GitHubUser
+    private val user: GitHubUser,
 ) : MvpPresenter<UserDescriptionView>() {
 
     companion object {
@@ -64,8 +64,10 @@ class UserDescriptionPresenter(
         }
     }
 
-    private fun loadDataFromServer() {
-        repositoriesRepo.getUserRepos(user)
+    fun getUserRepos() = repositoriesRepo.getUserRepos(user)
+
+    fun loadDataFromServer() {
+        getUserRepos()
             .observeOn(uiSchedulers)
             .subscribe({ repos ->
                 userRepositoriesPresenter.userRepos.clear()
